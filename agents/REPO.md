@@ -40,3 +40,12 @@ treasure, theming).
   an -alpha on the first qualifying push, and its notes are still the template
   example. Before the first real release: edit the notes block in
   `.github/workflows/release.yml`, then flip the variable.
+
+- Dependency graph: disabled for newly created repos under this org (the
+  REST `security_and_analysis.dependency_graph` field does not accept it here),
+  so `.github/workflows/dependency-submission.yml` was removed from the initial
+  scaffold - it fails every push with "Dependency graph is disabled" until the
+  org flips the default. Re-add it (copy from neoforge-mod-template) once a
+  dependency-submission run can succeed; `dependency-review.yml` stays and may
+  report the same way at the first PR - non-required until a ruleset says
+  otherwise.
