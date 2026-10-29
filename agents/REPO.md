@@ -35,3 +35,8 @@ treasure, theming).
   dimension's own biome, not the source pack's.
 - No dimension exists until the core gates (#162, #163) land; until then this
   addon compiles and does nothing.
+- Release pipeline: the repository variable `ALPHA_RELEASES` is set to `false`
+  for this addon until its first real release - release.yml otherwise publishes
+  an -alpha on the first qualifying push, and its notes are still the template
+  example. Before the first real release: edit the notes block in
+  `.github/workflows/release.yml`, then flip the variable.
