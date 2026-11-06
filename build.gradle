@@ -68,6 +68,7 @@ neoForge {
 // (gradle.properties) rather than duplicated in the toml.
 def generateModMetadata = tasks.register('generateModMetadata', ProcessResources) {
     def replaceProperties = [
+            api_version            : api_version,
             minecraft_version      : minecraft_version,
             minecraft_version_range: minecraft_version_range,
             neo_version            : neo_version,
@@ -96,10 +97,49 @@ tasks.withType(JavaCompile).configureEach {
 // JUnit suite: the CI junit check grades it and refuses to pass on an empty
 // run, so this configuration must stay wired in every derived repo.
 repositories {
+    // The platform (I32): the API ships from the org's GitHub Packages
+    // registry. Credentials come from the workflow token in CI; a local
+    // build can supply gpr.user / gpr.key in ~/.gradle/gradle.properties.
+    maven {
+        name = 'InfiniteDungeonApiPackages'
+        url = uri('https://maven.pkg.github.com/HexaHexes/infinite-dungeon-api')
+        credentials {
+            username = System.getenv('GITHUB_ACTOR') ?: project.findProperty('gpr.user')
+            password = System.getenv('GITHUB_TOKEN') ?: project.findProperty('gpr.key')
+        }
+    }
+    maven {
+        name = 'CurseMaven'
+        url = 'https://cursemaven.com'
+    }
     mavenCentral()
 }
 
+// A dev-runs-only dependency bucket. The runs resolve
+// configurations.runtimeClasspath; extending it from this bucket puts the
+// entry on every dev run (and the gametest server, which folds in this
+// configuration) while runtimeElements - and therefore the published POM -
+// stays free of optional mods that consumers never need transitively.
+configurations {
+    devRuntime
+}
+configurations.runtimeClasspath.extendsFrom(configurations.devRuntime)
+
 dependencies {
+    // The platform (I32): the addon consumes the API's dimension profiles,
+    // services and events. Required in every context, declared in the toml.
+    compileOnly "org.bitwisemadness.infinitedungeonapi:infinite_dungeon_api:${api_version}"
+    runtimeOnly "org.bitwisemadness.infinitedungeonapi:infinite_dungeon_api:${api_version}"
+    testImplementation "org.bitwisemadness.infinitedungeonapi:infinite_dungeon_api:${api_version}"
+
+    // The Dungeon Crawl contract (section 13's pinned coordinate, 2.3.17):
+    // the ported structure sets reference dungeoncrawl:dungeon, so the
+    // contract jar must be on every dev run and the gametest server the way
+    // it must on a real server. devRuntime only - the wiring PR touches no
+    // Dungeon Crawl classes, so there is no compile-side entry and nothing
+    // ships.
+    devRuntime "curse.maven:dungeon-crawl-324973:7887320"
+
     testImplementation platform('org.junit:junit-bom:5.10.2')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
