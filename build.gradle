@@ -50,6 +50,17 @@ neoForge {
             type = "gameTestServer"
             gameDirectory = project.layout.projectDirectory.dir('run')
         }
+
+        // Regenerates src/generated/resources - the End dimension scaffold
+        // (issue #4, step 2). The addon has no runtime dependencies beyond the
+        // platform, which is already on every classpath.
+        data {
+            data()
+            gameDirectory = project.layout.projectDirectory.dir('run')
+            programArguments.addAll '--mod', mod_id, '--all',
+                    '--output', file('src/generated/resources').absolutePath,
+                    '--existing', file('src/main/resources').absolutePath
+        }
     }
 
     mods {
@@ -88,6 +99,10 @@ def generateModMetadata = tasks.register('generateModMetadata', ProcessResources
 // Feed the generated metadata in as a resource dir; passing the task provider
 // wires the dependency so the toml is generated before resources are processed.
 sourceSets.main.resources.srcDir generateModMetadata
+// The generated datapack is committed and packaged as part of the mod's
+// resources: datagen owns data/** (issue #4) and the CI drift gate keeps
+// the committed tree identical to what runData produces.
+sourceSets.main.resources.srcDir 'src/generated/resources'
 neoForge.ideSyncTask generateModMetadata
 
 tasks.withType(JavaCompile).configureEach {
@@ -155,7 +170,7 @@ test {
 // "All N required tests passed :)" when every required test succeeds. Keep
 // expectedTests in sync with the @GameTest methods in src/gametest.
 tasks.matching { it.name == 'runGameTestServer' }.configureEach {
-    def expectedTests = 1
+    def expectedTests = 2
     doLast {
         def log = file('run/logs/latest.log')
         if (!log.exists()) {
