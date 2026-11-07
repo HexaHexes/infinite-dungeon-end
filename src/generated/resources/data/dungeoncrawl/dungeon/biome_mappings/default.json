@@ -1,0 +1,25 @@
+{
+  "default": [
+    {
+      "key": "dungeoncrawl:default"
+    }
+  ],
+  "mapping": {
+    "infinite_dungeon_end:end": [
+      {
+        "key": "dungeoncrawl:the_end/default"
+      }
+    ],
+    "minecraft:end_highlands": [
+      {
+        "key": "dungeoncrawl:the_end/default"
+      }
+    ],
+    "minecraft:end_midlands": [
+      {
+        "key": "dungeoncrawl:the_end/default"
+      }
+    ]
+  },
+  "replace": false
+}

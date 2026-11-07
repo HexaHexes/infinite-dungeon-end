@@ -1,0 +1,28 @@
+{
+  "entries": [
+    {
+      "entity": "minecraft:endermite"
+    },
+    {
+      "entity": "minecraft:enderman"
+    },
+    {
+      "entity": "minecraft:shulker"
+    },
+    {
+      "entity": "minecraft:pillager"
+    },
+    {
+      "entity": "minecraft:witch"
+    },
+    {
+      "entity": "minecraft:illusioner"
+    },
+    {
+      "entity": "minecraft:vindicator"
+    },
+    {
+      "entity": "minecraft:evoker"
+    }
+  ]
+}

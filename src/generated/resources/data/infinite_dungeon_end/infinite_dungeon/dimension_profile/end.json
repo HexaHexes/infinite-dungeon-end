@@ -1,3 +1,7 @@
 {
-  "dimension": "infinite_dungeon_end:end"
+  "dimension": "infinite_dungeon_end:end",
+  "pools": {
+    "elite": "infinite_dungeon_end:elite",
+    "fodder": "infinite_dungeon_end:fodder"
+  }
 }

@@ -1,11 +1,12 @@
 package org.bitwisemadness.infinitedungeon.end;
 
-import com.google.gson.JsonObject;
+import com.google.gson.JsonElement;
 import com.mojang.logging.LogUtils;
 import java.util.Map;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import org.bitwisemadness.infinitedungeon.end.datagen.DcContractContent;
 import org.bitwisemadness.infinitedungeon.end.datagen.DimensionContent;
 import org.bitwisemadness.infinitedungeon.end.datagen.JsonFilesProvider;
 import org.slf4j.Logger;
@@ -43,9 +44,11 @@ public final class InfiniteDungeonEnd {
         }
         event.addProvider(new JsonFilesProvider("end_dimension_scaffold",
                 event.getGenerator().getPackOutput(), files()));
+        event.addProvider(new JsonFilesProvider("end_dc_contract",
+                event.getGenerator().getPackOutput(), DcContractContent.files()));
     }
 
-    private static Map<String, JsonObject> files() {
+    private static Map<String, JsonElement> files() {
         return DimensionContent.files();
     }
 }
