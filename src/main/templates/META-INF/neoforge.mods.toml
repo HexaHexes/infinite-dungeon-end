@@ -19,9 +19,6 @@ description = '''${mod_description}'''
 # In-game config editing section of README.md). Any existing texture works.
 configuredBackground = "minecraft:textures/block/stone.png"
 
-[[mixins]]
-config = "${mod_id}.mixins.json"
-
 [[dependencies.${mod_id}]]
 modId = "neoforge"
 type = "required"
@@ -36,6 +33,25 @@ versionRange = "${minecraft_version_range}"
 ordering = "NONE"
 side = "BOTH"
 
-# Add your mod's dependencies below. Use type = "optional" for anything the mod
-# works without, and gate the code that touches it (mixins, registrations) so it
-# no-ops when the dependency is absent.
+# infinite-dungeon-api: the platform (I32) - the addon consumes its dimension
+# profiles and portal rules, so it is required rather than optional. The range
+# is derived from api_version in gradle.properties, the same value build.gradle
+# resolves.
+[[dependencies.${mod_id}]]
+modId = "infinite_dungeon_api"
+type = "required"
+versionRange = "[${api_version},)"
+ordering = "BEFORE"
+side = "BOTH"
+
+# Dungeon Crawl: the ported content pack's structure sets reference
+# dungeoncrawl:dungeon (the dc_dp_the_end blueprint's contract). The range
+# pins the version the mod was verified against; resolution is by mod id, so
+# later 2.x builds satisfy it.
+[[dependencies.${mod_id}]]
+modId = "dungeoncrawl"
+type = "required"
+versionRange = "[2.3.17,)"
+ordering = "AFTER"
+side = "BOTH"
+reason = "The End dimension generates Dungeon Crawl's dungeon structures."
