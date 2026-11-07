@@ -1,0 +1,22 @@
+{
+  "default": [
+    {
+      "key": "dungeoncrawl:the_end_no_pillars_0",
+      "weight": 1
+    }
+  ],
+  "mapping": {
+    "minecraft:end_highlands": [
+      {
+        "key": "dungeoncrawl:the_end_no_pillars_0",
+        "weight": 1
+      }
+    ],
+    "minecraft:end_midlands": [
+      {
+        "key": "dungeoncrawl:the_end_no_pillars_0",
+        "weight": 1
+      }
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "pools": [
+    {
+      "entries": [
+        {
+          "type": "loot_table",
+          "name": "minecraft:chests/simple_dungeon"
+        },
+        {
+          "type": "loot_table",
+          "name": "minecraft:chests/ruined_portal"
+        },
+        {
+          "type": "loot_table",
+          "name": "minecraft:chests/stronghold_corridor"
+        }
+      ],
+      "rolls": 1
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 package org.bitwisemadness.infinitedungeon.end.datagen;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -43,8 +44,8 @@ public final class DimensionContent {
     }
 
     /** Every datapack JSON, keyed by its path inside the jar. */
-    public static Map<String, JsonObject> files() {
-        Map<String, JsonObject> files = new LinkedHashMap<>();
+    public static Map<String, JsonElement> files() {
+        Map<String, JsonElement> files = new LinkedHashMap<>();
         files.put("data/infinite_dungeon_end/dimension/end.json", dimension());
         files.put("data/infinite_dungeon_end/dimension_type/end.json", dimensionType());
         files.put("data/infinite_dungeon_end/worldgen/biome/end.json", biome());
@@ -174,37 +175,51 @@ public final class DimensionContent {
         return json;
     }
 
-    /** The minimal dimension profile: membership now, pools with step 3. */
+    /**
+     * The dimension profile: membership plus the spawn pools ported from
+     * the DC monster staging (the common union is fodder, the rare union
+     * elite; the blueprint defines no boss entries, so the boss pool stays
+     * unset and the consumer's default applies).
+     */
     private static JsonObject profile() {
+        JsonObject pools = new JsonObject();
+        pools.addProperty("fodder", "infinite_dungeon_end:fodder");
+        pools.addProperty("elite", "infinite_dungeon_end:elite");
         JsonObject json = new JsonObject();
         json.addProperty("dimension", DIMENSION_ID);
+        json.add("pools", pools);
         return json;
     }
 
-    private static void validate(Map<String, JsonObject> files) {
+    private static void validate(Map<String, JsonElement> files) {
         List<String> errors = new java.util.ArrayList<>();
         if (files.size() != 6) {
             errors.add("file count: " + files.size() + " expected 6");
         }
-        int salt = files.get("data/infinite_dungeon_end/worldgen/structure_set/end.json")
-                .getAsJsonObject("placement").get("salt").getAsInt();
+        JsonObject structureSet =
+                files.get("data/infinite_dungeon_end/worldgen/structure_set/end.json")
+                        .getAsJsonObject();
+        int salt = structureSet.getAsJsonObject("placement").get("salt").getAsInt();
         if (salt == CORE_LANES_SALT) {
             errors.add("the mirror set must not reuse the core lanes salt");
         }
         if (salt <= 0) {
             errors.add("the mirror set salt must be a fixed positive integer");
         }
-        if (!files.get("data/infinite_dungeon_end/dimension/end.json")
-                .getAsJsonObject("generator").getAsJsonObject("settings")
+        JsonObject dimension = files.get("data/infinite_dungeon_end/dimension/end.json")
+                .getAsJsonObject();
+        if (!dimension.getAsJsonObject("generator").getAsJsonObject("settings")
                 .get("structure_overrides").getAsString().equals("infinite_dungeon_end:end")) {
             errors.add("the dimension's structure_overrides must point at the mirror set");
         }
-        JsonObject tag = files.get(GATE_TAG_PATH);
+        JsonObject tag = files.get(GATE_TAG_PATH).getAsJsonObject();
         if (tag.get("replace").getAsBoolean()) {
             errors.add("the biome-gate tag entry must stay additive (replace false)");
         }
-        if (!files.get("data/infinite_dungeon_end/infinite_dungeon/dimension_profile/end.json")
-                .get("dimension").getAsString().equals(DIMENSION_ID)) {
+        JsonObject profile =
+                files.get("data/infinite_dungeon_end/infinite_dungeon/dimension_profile/end.json")
+                        .getAsJsonObject();
+        if (!profile.get("dimension").getAsString().equals(DIMENSION_ID)) {
             errors.add("the profile must declare this addon's dimension");
         }
         if (!errors.isEmpty()) {

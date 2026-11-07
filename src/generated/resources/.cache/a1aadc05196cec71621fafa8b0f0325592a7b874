@@ -1,7 +1,7 @@
-// 1.21.1	2026-11-06T22:51:28.5928921	end_dimension_scaffold
+// 1.21.1	2026-11-07T20:44:20.905202	end_dimension_scaffold
 e8b6a73a72f34913fea8c38f9c4891aa6df9abfb data/dungeoncrawl/tags/worldgen/biome/has_structure/dungeon.json
 ee590aae7cd22bbb30c291a7173d75bb02227064 data/infinite_dungeon_end/dimension/end.json
 67787820690b07bd7cd051a45fbbf33449ebb63a data/infinite_dungeon_end/dimension_type/end.json
-0c5318942011a9fec99845036319470082d1cca7 data/infinite_dungeon_end/infinite_dungeon/dimension_profile/end.json
+cbb735d38d125b280cbc3973356a912d0ad6b99f data/infinite_dungeon_end/infinite_dungeon/dimension_profile/end.json
 5688c53b6a4b2105fe2b443bef03405415e85cd1 data/infinite_dungeon_end/worldgen/biome/end.json
 e60dd69bee04a8d1aca7222ead3e72d0c7d43c99 data/infinite_dungeon_end/worldgen/structure_set/end.json

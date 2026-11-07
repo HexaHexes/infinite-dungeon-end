@@ -1,0 +1,21 @@
+{
+  "pools": [
+    {
+      "entries": [
+        {
+          "type": "loot_table",
+          "name": "minecraft:chests/end_city_treasure"
+        },
+        {
+          "type": "loot_table",
+          "name": "minecraft:chests/bastion_treasure"
+        },
+        {
+          "type": "loot_table",
+          "name": "minecraft:chests/ancient_city_treasure"
+        }
+      ],
+      "rolls": 3
+    }
+  ]
+}
