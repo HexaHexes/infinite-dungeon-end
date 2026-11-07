@@ -169,8 +169,7 @@ public final class DimensionContent {
         JsonObject json = new JsonObject();
         json.addProperty("replace", false);
         JsonArray values = new JsonArray();
-        values.add(DIMENSION_ID.split(":", 2)[1].isEmpty() ? DIMENSION_ID
-                : "infinite_dungeon_end:end");
+        values.add("infinite_dungeon_end:end");
         json.add("values", values);
         return json;
     }
