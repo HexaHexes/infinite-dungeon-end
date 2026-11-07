@@ -1,0 +1,17 @@
+{
+  "pools": [
+    {
+      "entries": [
+        {
+          "type": "loot_table",
+          "name": "minecraft:chests/ancient_city"
+        },
+        {
+          "type": "loot_table",
+          "name": "minecraft:chests/burried_treasure"
+        }
+      ],
+      "rolls": 2
+    }
+  ]
+}

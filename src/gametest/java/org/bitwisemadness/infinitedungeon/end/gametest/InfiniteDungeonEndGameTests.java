@@ -80,6 +80,36 @@ var biomes = server.registryAccess().registryOrThrow(Registries.BIOME);
                         + "consumers key on it");
         helper.assertTrue(DimensionProfiles.isDungeonDimension(DIMENSION_ID),
                 "the addon's dimension must count as a dungeon dimension");
+        var resolved = (org.bitwisemadness.infinitedungeonapi.profile.DimensionProfile)
+                profile.orElseThrow();
+        helper.assertTrue(resolved.pools().isPresent()
+                && "infinite_dungeon_end:fodder".equals(
+                        resolved.pools().get().fodder().orElse(null))
+                && "infinite_dungeon_end:elite".equals(
+                        resolved.pools().get().elite().orElse(null)),
+                "the profile must carry the ported spawn pools");
+        helper.succeed();
+    }
+
+    /**
+     * Every DC-contract file the port ships - the dungeon type, theming,
+     * staged loot and treasure, biome mappings, and the two org spawn pools -
+     * resolves on the live classpath (issue #4, step 3); re-running the
+     * tables in-process also re-runs their validation.
+     */
+    @GameTest(template = "empty")
+    public static void dc_contract_files_resolve(GameTestHelper helper) {
+        var server = helper.getLevel().getServer();
+        org.bitwisemadness.infinitedungeon.end.datagen.DcContractContent.files()
+                .forEach((path, json) -> {
+                    String relative = path.substring("data/".length());
+                    String namespace = relative.substring(0, relative.indexOf('/'));
+                    var id = ResourceLocation.fromNamespaceAndPath(
+                            namespace, relative.substring(relative.indexOf('/') + 1));
+                    helper.assertTrue(
+                            server.getResourceManager().getResource(id).isPresent(),
+                            "ported contract file missing at runtime: " + path);
+                });
         helper.succeed();
     }
 }
