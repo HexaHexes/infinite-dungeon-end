@@ -1,7 +1,6 @@
 package org.bitwisemadness.infinitedungeon.end.datagen;
 
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.util.LinkedHashMap;
 import java.util.Map;
