@@ -7,8 +7,8 @@ and pulled in verbatim - **never hand-edit it.** Everything in this file is this
 repo's own and is edited freely; keep it aligned with the org rules rather than
 restating them.
 
-**Repo:** `HexaHexes/infinite-dungeon-end` - **Mod ID:** `infinite_dungeon_end` - **Branch:** `main`
-**Platform:** Minecraft 1.21.1 / NeoForge 21.1.259 / JDK 21 - **Jar:** `build/libs/infinite_dungeon_end-<version>.jar`
+**Repo:** `HexaHexes/infinite-dungeon-end` · **Mod ID:** `infinite_dungeon_end` · **Branch:** `neoforge-1.21.1` (the loader line; this is the default branch - no `main`)
+**Platform:** Minecraft 1.21.1 / NeoForge 21.1.259 / JDK 21 · **Jar:** `build/libs/infinite_dungeon_end-neoforge-1.21.1-<version>.jar`
 
 Adds the End dimension - one of the seven sibling dimension addons ported from the
 Dungeon Crawl - Dimensional Patch datapacks (project 1189484): this addon ships one
